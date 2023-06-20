@@ -5,7 +5,10 @@ blogdata.push({
     slug: 'what-is-react',
     content: 'React is the best framework of JavaScript.',
     author: 'Toxe',
-    comments: [],
+    comments: [{
+        content: 'This is a comment.',
+        author: 'toxe'
+    }],
 })
 blogdata.push({
     title: 'What is Vue?',

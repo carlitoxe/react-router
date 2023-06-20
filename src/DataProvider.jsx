@@ -21,6 +21,29 @@ function DataProvider({ children }) {
         navigate('/blog');
     }
 
+    const commentBlog = (blogSlug, comment) => {
+        const idx = data.findIndex((blog) => blog.slug === blogSlug);
+        if (idx >= 0) {
+          setBlogdata((prevState) => {
+            const blogsTemp = [...prevState];
+            const blog = blogsTemp[idx];
+            const newComments = [...blog.comments, comment];
+            blog.comments = newComments;
+            blogsTemp[idx] = blog;
+            return blogsTemp;
+          });
+        }
+      };
+
+      const removeComment = (blogSlug, position) => {
+        const idx = data.findIndex((blog) => blog.slug === blogSlug);
+        if (idx >= 0) {
+          const blogsTemp = [...data];
+          blogsTemp[idx].comments.splice(position, 1);
+          setBlogdata(blogsTemp);
+        }
+      };
+
 /*     const editBlog = (array) => {
 
         const editedElement = {
@@ -34,7 +57,7 @@ function DataProvider({ children }) {
         navigate('/blog')
     } */
 
-    const blogs = { data, addBlog, deleteBlog };
+    const blogs = { data, addBlog, deleteBlog, commentBlog, removeComment };
     
     return (
         <BlogsContext.Provider value={blogs}>

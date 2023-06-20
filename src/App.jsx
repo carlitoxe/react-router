@@ -8,6 +8,8 @@ import { LoginPage } from './LoginPage';
 import { LogoutPage } from './LogoutPage'
 import { ProfilePage } from './ProfilePage';
 import { DataProvider } from './DataProvider';
+import { CreatePost } from './CreatePost';
+
 //import './App.css'
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/blog" element={<BlogPage />} >
                 <Route path=":slug" element={<BlogPost />} />
+                <Route path='create' element={<CreatePost />}></Route>
               </Route>
               <Route path="/login" element={<LoginPage />} />
               <Route 

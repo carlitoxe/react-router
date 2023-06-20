@@ -4,6 +4,8 @@ import { blogdata } from './blogdata.jsx'
 import { useBlogs } from "./DataProvider.jsx";
 import { useAuth } from "./auth.jsx";
 import { EditPost } from "./EditPost.jsx"; 
+import { Comment } from "./Comment.jsx";
+import { CommentBox } from "./CommentBox.jsx";
 
 function BlogPost() {
 
@@ -11,6 +13,8 @@ function BlogPost() {
     const { slug } = useParams();
     const auth = useAuth();
     const blogs = useBlogs();
+
+    const { commentBlog } = useBlogs();
 
     const [editPost, setEditPost] = useState(false);
     
@@ -35,23 +39,23 @@ function BlogPost() {
         console.log(blogdataUpdate);
     } */
 
-    const [comment, setComment] = useState('')
-    const onChange = (e) => {
-        setComment(e.target.value);
-    }
+    //const [comment, setComment] = useState('')
 
-    const addComment = (comment) => {
+  /*   const addComment = (comment) => {
       //  const comment = e.target.value;
       blogpost.comments.push(comment)
       console.log(comment);
-    }  
+    }   */
 
-    const onSubmit = (e) => {
+    
+ /*    const onSubmit = (e) => {
         e.preventDefault();
-        if (comment) {
-            addComment(comment)
-        }
-    }
+        commentBlog(blogSlug, {
+        content: comment,
+        author: userData.username,
+        });
+        setComment('');
+    }; */
 
     return (
         <>
@@ -73,18 +77,26 @@ function BlogPost() {
            {canDelete && (
                 <button onClick={() => blogs.deleteBlog(blogpost.slug)}>Delete blog</button>
             )}
-
+            
+            {blogpost.comments.length > 0 && (
+                <>
+                    <p>Comments:</p>
+                    <ul>    
+                    {blogpost.comments.map((comment, idx) => (
+                        <Comment
+                            comment={comment}
+                            blogSlug={blogpost.slug}
+                            position={idx}
+                            key={`${comment.author}-${idx}`}
+                        />
+                    ))}
+                    </ul>
+                </>
+            )}
+    
                 
             {canComment && (
-                <>
-                <p>Comments: </p>
-                <p>{blogpost.comments}</p>
-                <form onSubmit={onSubmit}>
-                    <textarea value={comment} onChange={onChange} name="comment" className="blog-comment" placeholder="Add a comment"></textarea>
-                    <br></br>
-                    <button type="submit" onClick={onSubmit}>Add a Comment</button>
-                </form>
-                </>
+                <CommentBox blogSlug={blogpost.slug} />
             )}
 
         </>

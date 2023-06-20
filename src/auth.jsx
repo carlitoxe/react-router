@@ -16,8 +16,8 @@ function AuthProvider({ children }) {
         const isEditor = editorsList.find(editor => editor === username)
         setUser({ username, isAdmin, isEditor });
 
-        const from = location.state?.from?.pathname || -1;
-        navigate(from, { replace: true })
+        const path = location.state?.from?.pathname || '/profile';
+        return navigate(path, { replace: true })
     }
 
     const logout = () => {
